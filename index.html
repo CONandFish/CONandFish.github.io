@@ -1,0 +1,92 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitch Chat</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
+</head>
+
+<style>
+    html,body {
+    margin: 0;
+    font-family: monospace;
+    color: hsl(197, 62%, 32%);
+}
+
+    #chat {
+        width: 400px;
+        height: 350px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    #chat li {
+        background-color: goldenrod;
+        box-sizing: border-box;
+        padding: 1rem 10px;
+        margin-bottom: 10px;
+    }
+
+    #chat ul {
+        list-style-type: none;
+        list-style-position: outside;
+    }
+
+    #chat::-webkit-scrollbar{
+        display: none;
+    }
+
+    @keyframe slide-in-left{
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0px);
+            opacity: 1;
+        }
+    }
+
+    #chat li:last-of-type {
+        animation-name: slide-in-left;
+        animation-duration: 0.15s;
+        animation-timing-function: ease-in;
+    }
+
+    #chat li:not(:last-of-type) {
+        opacity: 0.5;
+    }
+</style>
+
+<body>
+
+    <div id="chat">
+        <ul>
+
+        </ul>
+    </div>
+
+</body>
+
+<script>
+var chat = document.querySelector("#chat>ul");
+
+ComfyJS.onChat = (user, message, flags, self, extra) => {
+    var newMessage = document.createElement("li");
+    var text = document.createElement("blockquote");
+
+    newMessage.innerText = user;
+    text.innerText = message;
+
+    newMessage.append(text);
+    chat.append(newMessage);
+}
+
+ComfyJS.Init("conandfish");
+</script>
+
+</html>
